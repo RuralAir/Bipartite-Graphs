@@ -57,7 +57,7 @@ class BipartiteGraph{
         }
       }
     }
-    return this.dist[NIL] !== Infinity;
+    return this.dist[0] !== Infinity;
   }
 
   /**First depth-first search method
