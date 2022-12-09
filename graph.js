@@ -83,7 +83,6 @@ class BipartiteGraph{
    * Marks visited alternating paths through the matching, starting from vertice (u in U)
   */
   dfs2 (u) {
-    console.log(u);
     this.visU[u] = true;
     for(let j = this.adj[u].length, v; j--;){
       v = this.adj[u][j];
