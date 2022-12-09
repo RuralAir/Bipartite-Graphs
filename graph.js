@@ -13,15 +13,15 @@ class BipartiteGraph{
     this.dist = Array(this.m+1).fill();
 
     // pair of vertex (u in U)
-    this.pairU = Array(this.m+1).fill(NIL);
+    this.pairU = Array(this.m+1).fill(0);
 
     // pair of vertex (v in V)
-    this.pairV = Array(this.n+1).fill(NIL);
+    this.pairV = Array(this.n+1).fill(0);
 
     // while there are more matches, find them and add them to the set
     while(this.bfs()){
       for(let u = this.pairU.length; --u;){
-        if(this.pairU[u] === NIL) this.dfs(u);
+        if(this.pairU[u] === 0) this.dfs(u);
       }
     }
   }
@@ -34,37 +34,37 @@ class BipartiteGraph{
     var Q = [];
 
     for(let u = this.pairU.length; --u;){
-      if(this.pairU[u] === NIL){
+      if(this.pairU[u] === 0){
         this.dist[u] = 0;
         Q.push(u);
       } else {
-        this.dist[u] = INF;
+        this.dist[u] = Infinity;
       }
     }
 
-    this.dist[NIL] = INF;
+    this.dist[0] = Infinity;
 
     // search the Queue for a longer match
     while(Q.length){
       let u = Q.shift();
-      if(this.dist[u] < this.dist[NIL]){
+      if(this.dist[u] < this.dist[0]){
         for(let i = this.adj[u].length, v; i--;){
           v = this.adj[u][i];
-          if(this.dist[this.pairV[v]] === INF){
+          if(this.dist[this.pairV[v]] === Infinity){
             this.dist[this.pairV[v]] = this.dist[u] + 1;
             Q.push(this.pairV[v]);
           }
         }
       }
     }
-    return this.dist[NIL] !== INF;
+    return this.dist[NIL] !== Infinity;
   }
 
   /**First depth-first search method
    * used to set alternating paths starting from (u in U) into the matching.
   */
   dfs(u){
-    if(u !== NIL){
+    if(u !== 0){
       for(let i = this.adj[u].length, v; i--;){
         v = this.adj[u][i];
         if(this.dist[this.pairV[v]] === this.dist[u]+1 && this.dfs(this.pairV[v])){
@@ -73,7 +73,7 @@ class BipartiteGraph{
           return true;
         }
       }
-      this.dist[u] = INF;
+      this.dist[u] = Infinity;
       return false;
     }
     return true;
